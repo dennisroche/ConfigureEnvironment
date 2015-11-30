@@ -36,7 +36,7 @@ Extract the contents into `C:\Users\[User]\Documents\WindowsPowerShell\modules\C
 Open a PowerShell console or the PowerShell ISE and run the following:
 
 ```
-iex ((New-Object net.webclient).DownloadString('https://raw.githubusercontent.com/dennisroche/ConfigureEnvironment/master/install.ps1'))
+iex ((New-Object net.webclient).DownloadString('https://raw.githubusercontent.com/dennisroche/ConfigureEnvironment/master/Install.ps1'))
 ```
 
 This will download the latest release from GitHub and unpack it in your PowerShell modules directory.
