@@ -5,7 +5,7 @@ A PowerShell module that bootstraps your development environment to use Internet
 **Example**
 
     Push-Location $PSScriptRoot
-    Import-Module .\ConfigureEnvironment\ConfigureEnvironment.psd1 -Force
+    Import-Module ConfigureEnvironment
 
     Invoke-ConfigureWebEnvironment (Resolve-Path "$PSScriptRoot\..") {
         param (
