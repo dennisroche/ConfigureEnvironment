@@ -34,8 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Install.ps1" />
-    <Compile Include="LICENSE" />
-    <Compile Include="README.md" />
     <Compile Include="src\Web\Add-LocalWebSite.ps1" />
     <Compile Include="src\ConfigureEnvironment.psd1" />
     <Compile Include="src\ConfigureEnvironment.ps1" />

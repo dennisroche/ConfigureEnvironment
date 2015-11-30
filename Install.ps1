@@ -19,7 +19,8 @@ function Install-ModuleFromGitHub {
 
     try 
     {
-        $Url = "https://github.com/$GitHubUser/$Project/releases/download/Latest/$Project.zip"
+    	# Note: you need to tag the release with `latest' for this to work
+        $Url = "https://github.com/$GitHubUser/$Project/releases/download/latest/$Project.zip"
         $InstallPath = Join-Path -Path (Split-Path -Path $Profile) -ChildPath "\Modules\$Project"
 
         if (!(Test-Path -Path $InstallPath)) {

@@ -27,7 +27,7 @@ Installation
 
 ### Manual Install
 
-Download [ConfigureEnvironment.zip](https://github.com/dennisroche/ConfigureEnvironment/releases/download/v0.1-alpha/ConfigureEnvironment.zip). 
+Download [ConfigureEnvironment.zip](https://github.com/dennisroche/ConfigureEnvironment/releases/download/latest/ConfigureEnvironment.zip). 
 Extract the contents into `C:\Users\[User]\Documents\WindowsPowerShell\modules\ConfigureEnvironment` or a location relative to your project.
 
 
