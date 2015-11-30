@@ -11,9 +11,9 @@ How to use
 
 ### Manual Install
 
-Download [ConfigureEnvironment.zip](https://github.com/dennisroche/ConfigureEnvironment/releases/download/Latest/ConfigureEnvironment.zip) and extract the contents into `C:\Users\[User]\Documents\WindowsPowerShell\modules\ConfigureEnvironment`
+Download [ConfigureEnvironment.zip](https://github.com/dennisroche/ConfigureEnvironment/releases/download/v0.1-alpha/ConfigureEnvironment.zip). 
+Extract the contents into `C:\Users\[User]\Documents\WindowsPowerShell\modules\ConfigureEnvironment` or a location relative to your project.
 
-_Create these directories if they don't exist_
 
 ### Scripted Install
 
