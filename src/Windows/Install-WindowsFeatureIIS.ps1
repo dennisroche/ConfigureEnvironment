@@ -14,7 +14,7 @@ function Install-WindowsFeatureIIS {
 
     Write-Host "Installing Internet Information Services (IIS) " -NoNewline
     $Dism = "$Env:WinDir\Sysnative\dism.exe"
-    & $Dism /Online /English /LogLevel:4 /Enable-Feature /All /FeatureName:IIS-ApplicationDevelopment /FeatureName:IIS-ASPNET /FeatureName:IIS-ASPNET45 /FeatureName:IIS-WindowsAuthentication | %{ Write-Verbose "[DISM] $_" }
+    & $Dism /Online /English /LogLevel:4 /Enable-Feature /All /FeatureName:IIS-ASPNET /FeatureName:IIS-ASPNET45 /FeatureName:IIS-WindowsAuthentication /featurename:IIS-ManagementConsole | %{ Write-Verbose "[DISM] $_" }
 
     Write-Host "[Done]" -ForegroundColor Green
 }

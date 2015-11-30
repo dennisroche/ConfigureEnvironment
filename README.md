@@ -4,22 +4,23 @@ A PowerShell module that bootstraps your development environment to use Internet
 
 **Example**
 
-    Push-Location $PSScriptRoot
-    Import-Module ConfigureEnvironment
+```ps1
+Push-Location $PSScriptRoot
+Import-Module ConfigureEnvironment
 
-    Invoke-ConfigureWebEnvironment (Resolve-Path "$PSScriptRoot\..") {
-        param (
-            [string]$Solution
-        )
+Invoke-ConfigureWebEnvironment (Resolve-Path "$PSScriptRoot\..") {
+    param (
+        [string]$Solution
+    )
 
-        $ServiceLocatorApi = @{
-            HostName = "webapp.local.company.com"
-            WebSiteName = "WebApp"
-            WebSiteLocation = "$Solution\src\WebApp"
-            AppPool = "DefaultAppPool"
-        }
+    $ServiceLocatorApi = @{
+        HostName = "webapp.local.company.com"
+        WebSiteName = "WebApp"
+        WebSiteLocation = "$Solution\src\WebApp"
+        AppPool = "DefaultAppPool"
     }
-
+}
+```
 
 Installation
 =============
@@ -35,7 +36,7 @@ Extract the contents into `C:\Users\[User]\Documents\WindowsPowerShell\modules\C
 
 Open a PowerShell console or the PowerShell ISE and run the following:
 
-```
+```ps1
 iex ((New-Object net.webclient).DownloadString('https://raw.githubusercontent.com/dennisroche/ConfigureEnvironment/master/Install.ps1'))
 ```
 
@@ -46,11 +47,11 @@ To run the above script, `Execution Policy` should be set to at least Bypass. Se
 
 ### PowerShell Gallery Install (Requires PowerShell v5)
 
-```
+```ps1
 Save-Module -Name ConfigureEnvironment -Path <path>
 ```
 
-```
+```ps1
 Install-Module -Name ConfigureEnvironment
 ```
 

@@ -1,5 +1,4 @@
 #Requires -Version 4.0
-# Error handling
 $ErrorActionPreference = "Stop"
 
 trap
