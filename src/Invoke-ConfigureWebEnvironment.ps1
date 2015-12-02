@@ -2,11 +2,6 @@
 function Invoke-ConfigureWebEnvironment {
     [CmdletBinding()]
     param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNullorEmpty()]
-        [ValidateScript({ Test-Path $_ })]
-        [string]$SolutionRoot,
-
         [Parameter(Mandatory)]
         [ScriptBlock]$ConfigureScript
     )
@@ -19,12 +14,12 @@ function Invoke-ConfigureWebEnvironment {
     try {
         # Ensure Internet Information Service is installed
         Install-WindowsFeatureIIS
+        Set-DisableLoopbackCheck
 
         &$ConfigureScript $SolutionRoot
 
         Write-Host
         Write-Host -ForegroundColor Green "Success!"
     } finally {
-
     }
 }

@@ -7,5 +7,5 @@
     CLRVersion = '4.0'
     DotNetFrameworkVersion = '4.5'
     ScriptsToProcess = @('ConfigureEnvironment.ps1')
-    FunctionsToExport = 'Invoke-Configure*', 'Add-LocalWebSite', 'Add-WebSite', 'Add-LocalhostDnsEntryToHostsFile'
+    FunctionsToExport = 'Invoke-Configure*', 'Add-LocalWebSite'
 }

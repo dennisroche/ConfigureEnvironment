@@ -26,7 +26,11 @@ function Add-WebSite {
     & $AppCmd add site /name:"$WebSiteName" /physicalPath:$WebSiteLocation /bindings:http/*:80:$HostName | %{ Write-Verbose "[AppCmd] $_" }
     & $AppCmd set app "$WebSiteName/" /applicationPool:"$AppPool" | %{ Write-Verbose "[AppCmd] $_" }
 
-    # Enable Windows Authenication
+    # Change anonymous identity to auth as app-pool identity instead of IUSR_...
+    & $AppCmd set config /section:anonymousAuthentication /username:"" --password | %{ Write-Verbose "[AppCmd] $_" }
+    
+    # Set Authentication
+    & $AppCmd set config "$WebSiteName" /section:anonymousAuthentication /enabled:false /commit:apphost | %{ Write-Verbose "[AppCmd] $_" }
     & $AppCmd set config "$WebSiteName" /section:windowsAuthentication /enabled:true /commit:apphost | %{ Write-Verbose "[AppCmd] $_" }
 
     if ($UseSSL) {
@@ -34,11 +38,8 @@ function Add-WebSite {
         & $AppCmd set site /site.name $WebSiteName "/+bindings.[protocol='https',bindingInformation='*:443:{LOCAL_APP_DOMAIN_NAME}']" | %{ Write-Verbose "[AppCmd] $_" }
     }
 
-    # Change anonymous identity to auth as app-pool identity instead of IUSR_...
-    & $AppCmd set config /section:anonymousAuthentication /username:"" --password | %{ Write-Verbose "[AppCmd] $_" }
-
     # Give Network Service permission to read the site files
-    & icacls "$WebSiteLocation" /inheritance:e /T /grant """NETWORK SERVICE:(OI)(CI)F""" | %{ Write-Verbose "[Icacls] $_" }
+    & icacls "$WebSiteLocation" /inheritance:e /T /grant """NETWORK SERVICE:(OI)(CI)F""" | Out-Null
 
     Write-Host "[Done]" -ForegroundColor Green
 }

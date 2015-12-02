@@ -10,6 +10,5 @@ function Add-LocalWebSite {
     $PSBoundParameters | ConvertTo-Json
 
     Add-LocalhostDnsEntryToHostsFile @PSBoundParameters
-
     Add-WebSite @PSBoundParameters
 }
