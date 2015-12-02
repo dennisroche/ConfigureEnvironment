@@ -27,11 +27,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+  	<Folder Include="src\" />
     <Folder Include="src\Web\" />
     <Folder Include="src\SqlServer\" />
     <Folder Include="src\Windows\" />
   </ItemGroup>
   <ItemGroup>
+  	<Compile Include="Install.ps1" />
     <Compile Include="src\Windows\Set-DisableLoopbackCheck.ps1" />
     <Compile Include="src\Web\Add-LocalWebSite.ps1" />
     <Compile Include="src\ConfigureEnvironment.psd1" />
