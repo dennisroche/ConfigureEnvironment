@@ -1,21 +1,32 @@
 function Add-WebSite {
     param (
-        [parameter(Mandatory)][string]
-        $WebSiteName,
-        [parameter(Mandatory)][string]
-        $WebSiteLocation,
-        [parameter(Mandatory)][string]
-        $HostName,
-        [parameter(Mandatory)][string]
-        $AppPool,
-        [parameter()][switch]
-        $UseSSL
+        [string]$WebSiteName,
+        [string]$WebSiteLocation,
+        [string]$HostName,
+        [string]$AppPool,
+        [switch]$UseSSL,
+        [string]$EnableAnonymousAuthentication,
+        [string]$EnableWindowsAuthentication
     )
+
+    $PSBoundParameters | ConvertTo-Json
 
     Write-Host "Adding '$WebSiteName' to IIS at '$HostName' " -NoNewline
 
     if (-Not (Test-Path $WebSiteLocation)) {
         New-Item $WebSiteLocation -ItemType Directory -ErrorAction Stop | Out-Null
+    }
+
+    if (-Not (Test-Path "$WebSiteLocation\*")) {
+        Copy-Item -Path "C:\inetpub\wwwroot\*.*" -Destination $WebSiteLocation -ErrorAction Continue | Out-Null
+    }
+
+    if ($EnableAnonymousAuthentication -eq '') {
+        $EnableAnonymousAuthentication = 'false'
+    }
+
+    if ($EnableWindowsAuthentication -eq '') {
+        $EnableWindowsAuthentication = 'false'
     }
 
     $AppCmd = "$env:WinDir\system32\inetsrv\AppCmd.exe"
@@ -30,16 +41,18 @@ function Add-WebSite {
     & $AppCmd set config /section:anonymousAuthentication /username:"" --password | %{ Write-Verbose "[AppCmd] $_" }
     
     # Set Authentication
-    & $AppCmd set config "$WebSiteName" /section:anonymousAuthentication /enabled:false /commit:apphost | %{ Write-Verbose "[AppCmd] $_" }
-    & $AppCmd set config "$WebSiteName" /section:windowsAuthentication /enabled:true /commit:apphost | %{ Write-Verbose "[AppCmd] $_" }
+    & $AppCmd set config "$WebSiteName" /section:anonymousAuthentication /enabled:$AllowAnonymous /commit:apphost | %{ Write-Verbose "[AppCmd] $_" }
+    & $AppCmd set config "$WebSiteName" /section:windowsAuthentication /enabled:$AllowWindows /commit:apphost | %{ Write-Verbose "[AppCmd] $_" }
 
     if ($UseSSL) {
         # If you want to add HTTPS (but you need an appropriate SSL cert installed)
         & $AppCmd set site /site.name $WebSiteName "/+bindings.[protocol='https',bindingInformation='*:443:{LOCAL_APP_DOMAIN_NAME}']" | %{ Write-Verbose "[AppCmd] $_" }
     }
 
-    # Give Network Service permission to read the site files
-    & icacls "$WebSiteLocation" /inheritance:e /T /grant """NETWORK SERVICE:(OI)(CI)F""" | Out-Null
+    if ($WebSiteLocation -ne '') {
+        # Give Network Service permission to read the site files
+        & icacls "$WebSiteLocation" /inheritance:e /T /grant """NETWORK SERVICE:(OI)(CI)F""" | Out-Null
+    }
 
     Write-Host "[Done]" -ForegroundColor Green
 }

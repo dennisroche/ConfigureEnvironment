@@ -27,15 +27,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-  	<Folder Include="src\" />
-    <Folder Include="src\Web\" />
-    <Folder Include="src\SqlServer\" />
-    <Folder Include="src\Windows\" />
+    <Folder Include="Build\" />
+    <Folder Include="Web\" />
+    <Folder Include="SqlServer\" />
+    <Folder Include="Windows\" />
   </ItemGroup>
   <ItemGroup>
-  	<Compile Include="Install.ps1" />
+    <Compile Include="src\Build\Invoke-MSBuild.ps1" />
+    <Compile Include="src\Invoke-ConsoleBuild.ps1" />
+    <Compile Include="src\Web\Add-WebApplication.ps1" />
     <Compile Include="src\Windows\Set-DisableLoopbackCheck.ps1" />
-    <Compile Include="src\Web\Add-LocalWebSite.ps1" />
     <Compile Include="src\ConfigureEnvironment.psd1" />
     <Compile Include="src\ConfigureEnvironment.ps1" />
     <Compile Include="src\Invoke-ConfigureWebEnvironment.ps1" />

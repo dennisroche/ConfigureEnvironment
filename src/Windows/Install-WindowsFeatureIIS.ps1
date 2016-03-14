@@ -13,7 +13,7 @@ function Install-WindowsFeatureIIS {
         $Dism = "dism.exe"
     }
 
-    & $Dism /Online /English /LogLevel:4 /Enable-Feature /All /FeatureName:IIS-ApplicationDevelopment /FeatureName:IIS-ASPNET /FeatureName:IIS-ASPNET45 /FeatureName:IIS-BasicAuthentication /FeatureName:IIS-WindowsAuthentication /featurename:IIS-ManagementConsole | %{ Write-Verbose "[DISM] $_" }
+    & $Dism /Online /English /LogLevel:4 /Enable-Feature /All /FeatureName:IIS-ApplicationDevelopment /FeatureName:IIS-ASPNET /FeatureName:IIS-ASPNET45 /FeatureName:IIS-BasicAuthentication /FeatureName:IIS-WindowsAuthentication /featurename:IIS-ManagementConsole | %{ Write-Host "[DISM] $_" }
 
     Write-Host "[Done]" -ForegroundColor Green
 }
