@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "setupEnv": [
+      "powershell -ExecutionPolicy Unrestricted ./SetupEnvironment.ps1"
+    ]
+  },
+  "frameworks": {
+    "net45": { }
+  },
+  "-vs-binding": { "ProjectOpened": [ "setupEnv​​​​​​​​​" ] }
+}
