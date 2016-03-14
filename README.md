@@ -1,4 +1,4 @@
-# ConfigureEnvironment
+# Configure Environment [![Build status](https://ci.appveyor.com/api/projects/status/o59sxa1tscs5f69s/branch/master?svg=true)](https://ci.appveyor.com/project/dennisroche/configureenvironment/branch/master)
 
 A PowerShell module that bootstraps your development environment to use Internet Information Servies (IIS), configurable with a terse script
 
