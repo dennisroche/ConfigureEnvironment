@@ -37,7 +37,7 @@ function Install-ModuleFromGitHub {
     try 
     {
     	# Note: you need to tag the release with `latest' for this to work
-        $Url = "https://github.com/$GitHubUser/$Project/releases/download/latest/$Project.zip"
+        $Url = "https://github.com/$GitHubUser/$Project/archive/latest.zip"
         $InstallPath = Join-Path -Path (Split-Path -Path $Profile) -ChildPath "\Modules\$Project"
 
         if ((Test-Path -Path $InstallPath)) {
@@ -52,7 +52,7 @@ function Install-ModuleFromGitHub {
         Invoke-WebRequest -Uri $Url -OutFile $DownloadPath
         Expand-Zip -Path $DownloadPath -DestinationPath $ExtractPath
         
-        Copy-Item $ExtractPath -Destination $InstallPath -Recurse
+        Copy-Item "$ExtractPath\$Project-latest\src" -Destination $InstallPath -Recurse
         Write-Host -ForegroundColor Green "Successfully installed $Project to '$InstallPath'"
     }
     finally 
