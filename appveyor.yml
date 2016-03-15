@@ -1,11 +1,14 @@
 version: 1.0.{build}
-os: WMF 5
-install:
-  - ps: |
-      Get-PackageProvider -Name NuGet -Force
-      Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-      Install-Module -Name PSScriptAnalyzer -Scope CurrentUser
+image: WMF 5
 environment:
   ModuleName: ConfigureEnvironment
+  SourceFolder: src
+install:
+- ps: >-
+    Get-PackageProvider -Name NuGet -Force
+
+    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
+    Install-Module -Name PSScriptAnalyzer -Scope CurrentUser
 build_script:
 - ps: . .\Appveyor.ps1
