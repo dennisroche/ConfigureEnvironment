@@ -54,6 +54,15 @@ Invoke-ConfigureWebEnvironment {
 
 If you need the script to self bootstrap, then add the following to the top.
 
+Powershell v5
+
+```ps1
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+Install-Module -Name ConfigureEnvironment -Scope CurrentUser
+```
+
+GitHub Releases
+
 ```ps1
 if (-Not (Get-Module -ListAvailable -Name ConfigureEnvironment)) {
     iex ((New-Object net.webclient).DownloadString('https://raw.githubusercontent.com/dennisroche/ConfigureEnvironment/master/Install.ps1'))
@@ -92,7 +101,7 @@ Save-Module -Name ConfigureEnvironment -Path <path>
 ```
 
 ```ps1
-Install-Module -Name ConfigureEnvironment
+Install-Module -Name ConfigureEnvironment -Scope CurrentUser
 ```
 
 _See the [PowerShell Gallery](http://www.powershellgallery.com/packages/ConfigureEnvironment/) for the complete details and instructions._
