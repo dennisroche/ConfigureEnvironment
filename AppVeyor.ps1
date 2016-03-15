@@ -21,11 +21,11 @@ Import-Module -Name PSScriptAnalyzer -Force
 $analysePath = Join-Path $env:APPVEYOR_BUILD_FOLDER $SourceFolder
 
 Write-Output "Invoke-ScriptAnalyzer -Path "$analysePath" -IncludeRule $rules.RuleName -Recurse"
-$rules = Get-ScriptAnalyzerRule -Severity Warning,Error
-$results = Invoke-ScriptAnalyzer -Path "$analysePath" -IncludeRule $rules.RuleName -Recurse
-$results
+$errorRules = Get-ScriptAnalyzerRule -Severity Error
+$errors = Invoke-ScriptAnalyzer -Path "$analysePath" -IncludeRule $errorRules.RuleName -Recurse
+$errors
 
-if ($results.Count -gt 0) {
-     Write-Warning "Analysis of ModuleName resulted $($results.Count) warnings or errors"
-     Exit 1
+if ($errors.Count -gt 0) {
+    Write-Warning "Analysis of ModuleName resulted $($errors.Count) errors"
+    Exit 1
 }
