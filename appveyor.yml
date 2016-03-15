@@ -1,7 +1,10 @@
 version: 1.0.{build}
 os: WMF 5
 install:
-  - ps: Get-PackageProvider -Name NuGet -Force
+  - ps: |
+  Get-PackageProvider -Name NuGet -Force
+  Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+  Install-Module -Name PSScriptAnalyzer -Scope CurrentUser
 environment:
   ModuleName: ConfigureEnvironment
 build_script:
