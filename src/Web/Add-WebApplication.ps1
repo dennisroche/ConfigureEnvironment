@@ -6,7 +6,8 @@ function Add-WebApplication {
         [string]$AppPool,
         [string]$ParentSite,
         [string]$EnableAnonymousAuthentication,
-        [string]$EnableWindowsAuthentication
+        [string]$EnableWindowsAuthentication,
+        [string]$UsingLocalDb
     )
 
     $PSBoundParameters | ConvertTo-Json
@@ -35,6 +36,11 @@ function Add-WebApplication {
     & $AppCmd add app /site.name:"$ParentSite" /path:/"$WebApplicationName" /physicalPath:$WebApplicationLocation | %{ Write-Verbose "[AppCmd] $_" }
     & $AppCmd set app /app.name:"$ParentSite/$WebApplicationName" /applicationPool:"$AppPool" | %{ Write-Verbose "[AppCmd] $_" }
 
+    if ([boolean]$UsingLocalDb) {
+        # LocalDB requires identityType:LocalSystem
+        & $AppCmd set config /section:applicationPools "/[name='$AppPool'].processModel.identityType:LocalSystem" | %{ Write-Verbose "[AppCmd] $_" }
+    }
+
     # Change anonymous identity to auth as app-pool identity instead of IUSR_...
     & $AppCmd set config "$ParentSite/$WebApplicationName" /section:anonymousAuthentication /username:"" --password | %{ Write-Verbose "[AppCmd] $_" }
 
@@ -42,7 +48,7 @@ function Add-WebApplication {
     & $AppCmd set config "$ParentSite/$WebApplicationName" /section:anonymousAuthentication /enabled:$EnableAnonymousAuthentication /commit:apphost | %{ Write-Verbose "[AppCmd] $_" }
     & $AppCmd set config "$ParentSite/$WebApplicationName" /section:windowsAuthentication /enabled:$EnableWindowsAuthentication /commit:apphost | %{ Write-Verbose "[AppCmd] $_" }
 
-    # # Give Network Service permission to read the site files
+    # Give Network Service permission to read the site files
     & icacls "$WebApplicationLocation" /inheritance:e /T /grant """NETWORK SERVICE:(OI)(CI)F""" | Out-Null
 
     Write-Host "[Done]" -ForegroundColor Green

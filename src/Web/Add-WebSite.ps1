@@ -6,7 +6,8 @@ function Add-WebSite {
         [string]$AppPool,
         [switch]$UseSSL,
         [string]$EnableAnonymousAuthentication,
-        [string]$EnableWindowsAuthentication
+        [string]$EnableWindowsAuthentication,
+        [string]$UsingLocalDb
     )
 
     $PSBoundParameters | ConvertTo-Json
@@ -36,6 +37,11 @@ function Add-WebSite {
     & $AppCmd set config /section:applicationPools "/[name='$AppPool'].processModel.identityType:NetworkService" | %{ Write-Verbose "[AppCmd] $_" }
     & $AppCmd add site /name:"$WebSiteName" /physicalPath:$WebSiteLocation /bindings:http/*:80:$HostName | %{ Write-Verbose "[AppCmd] $_" }
     & $AppCmd set app "$WebSiteName/" /applicationPool:"$AppPool" | %{ Write-Verbose "[AppCmd] $_" }
+
+    if ([boolean]$UsingLocalDb) {
+        # LocalDB requires identityType:LocalSystem
+        & $AppCmd set config /section:applicationPools "/[name='$AppPool'].processModel.identityType:LocalSystem" | %{ Write-Verbose "[AppCmd] $_" }
+    }
 
     # Change anonymous identity to auth as app-pool identity instead of IUSR_...
     & $AppCmd set config /section:anonymousAuthentication /username:"" --password | %{ Write-Verbose "[AppCmd] $_" }
