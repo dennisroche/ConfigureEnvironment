@@ -1,0 +1,8 @@
+version: 1.0.{build}
+os: WMF 5
+install:
+  - ps: Get-PackageProvider -Name NuGet -Force
+environment:
+  ModuleName: ConfigureEnvironment
+build_script:
+- ps: . .\Appveyor.ps1
